@@ -23,7 +23,7 @@ from api import urls as api_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include(post_urls, namespace='post')),
+    url(r'^', include(post_urls, namespace='home')),
     url(r'^api/', include(api_urls, namespace='api')),
     url(r'^accounts/', include('allauth.urls')),
 

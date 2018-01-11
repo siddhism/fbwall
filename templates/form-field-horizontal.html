@@ -1,0 +1,19 @@
+{% load like_utils %}
+<div class="form-group{% if field.errors %} has-error{% endif %}">
+    {% if field.label %}
+        <label class="col-lg-3 control-label" for="id_{{ field.html_name }}">{{ field.label }}</label>
+    {% endif %}
+    <div class="col-lg-9">
+        {{ field|addclass:'form-control' }}
+    </div>
+    
+    <span class="help-block col-sm-9 col-sm-offset-3">
+        {% if field.errors %}
+            {% for error in field.errors %}
+                {{ error }}
+            {% endfor %}
+        {% else %}
+            {{ field.help_text }}
+        {% endif %}
+    </span>
+</div>

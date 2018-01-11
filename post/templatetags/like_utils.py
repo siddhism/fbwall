@@ -13,3 +13,10 @@ def is_liked_by(post_id, user):
         return True
     except Like.DoesNotExist:
         return False
+
+@register.filter(name='addclass')
+def addclass(field, css):
+    if field:
+        return field.as_widget(attrs={"class":css})
+    else:
+        return ''

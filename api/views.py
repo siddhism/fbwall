@@ -37,25 +37,3 @@ class LikeView(APIView):
             return Response({'status': LikeStatus.unliked, 'reason': ErrorConfig.already_likes}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'status': LikeStatus.unknown}, status=status.HTTP_400_BAD_REQUEST)
-
-class LikeDetail(APIView):
-    """
-    API endpoint to check if a current logged in user likes a particular post.
-    params 
-    - post_id : id of the post for which we want to check
-    returns
-    - status : True or False
-    """
-    allowed_methods = ['GET']
-
-    def get(self, request, *args, **kwargs):
-        user = request.user
-        post_id = request.query_params.get('post_id')
-        post = get_object_or_404(Post, pk=post_id)
-        try:
-            like = Like.objects.get(user=user, post=post)
-            return Response({'status': True}, status=status.HTTP_200_OK)
-        except Like.DoesNotExist:
-            return Response({'status': False}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'status': LikeStatus.unknown}, status=status.HTTP_400_BAD_REQUEST)
