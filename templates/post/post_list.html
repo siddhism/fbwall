@@ -25,6 +25,7 @@
                     {% if post.image %}
                         <img src="{{post.image.url}}" width="250" height="250" class="img-responsive">
                     {% endif %}
+                    {% is_liked_by post.pk user as user_likes_post %}
                     {% if user_likes_post %}
                         <button class="btn btn-default like" data-pk="{{ post.pk }}">Unlike</button>
                     {% else %}
