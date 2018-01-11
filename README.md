@@ -25,7 +25,11 @@ Or setup manually
 virtualenv env_fbwall
 source env_fbwall/bin/activate
 pip install -r reuqirements.txt
+bower install --allow-root
 ./manage.py migrate
+./manage.py collectstatic
 ./manage.py createsuperuser
 ./manage.py runserver 7001
 ```
+
+check http://127.0.0.1:7001/
