@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fbwall</title>
+</head>
+<body>
+    {% for post in object_list %}
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.description }}</p>
+        {% if post.image %}
+            <img src="{{post.image.url}}" width="250" height="250">
+        {% endif %}
+        <br>
+
+        <a href="{% url 'api:like' post.pk %}">Like</a>
+        <hr>
+    {% endfor %}
+</body>
+</html>
