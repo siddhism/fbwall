@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>fbwall</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load like_utils %}
+{% block content %}
+    
     {% for post in object_list %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.description }}</p>
@@ -11,9 +9,39 @@
             <img src="{{post.image.url}}" width="250" height="250">
         {% endif %}
         <br>
+        {% is_liked_by post.pk user as user_likes_post %}
+        {% if user_likes_post %}
+            <button class="btn btn-default like" data-pk="{{ post.pk }}">Unlike</button>
+        {% else %}
+            <button class="btn btn-default like" data-pk="{{ post.pk }}">Like</button>
+        {% endif %}
 
-        <a href="{% url 'api:like' post.pk %}">Like</a>
         <hr>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $('.like').on('click', function (data) {
+            var that = this;
+            var pk = this.dataset.pk;
+            console.log('Post id '+pk);
+            var params = {};
+            params['post_id'] = pk;
+            $.get('/api/like/', params, function (response) {
+                console.log(response);
+                if (response.status == 'liked') {
+                    console.log(that);
+                    console.log('liked, updating text');
+                    that.innerText = 'Unlike';
+                }
+                else if (response.status == 'unliked') {
+                    console.log(that);
+                    console.log('unliked, updating text');
+                    that.innerText = 'Like';
+                }
+            });
+
+        });
+    </script>
+    
+{% endblock scripts %}

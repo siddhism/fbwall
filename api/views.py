@@ -21,11 +21,11 @@ class LikeView(APIView):
     Returns:
     - status : 'liked' or 'unliked'
     """
-    allowed_methods = ['POST']
+    allowed_methods = ['GET', 'POST']
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        post_id = kwargs.get('post_id')
+        post_id = request.query_params.get('post_id')
         post = get_object_or_404(Post, pk=post_id)
         try:
             like = Like.objects.create(user=user, post=post)
@@ -50,7 +50,7 @@ class LikeDetail(APIView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        post_id = kwargs.get('post_id')
+        post_id = request.query_params.get('post_id')
         post = get_object_or_404(Post, pk=post_id)
         try:
             like = Like.objects.get(user=user, post=post)

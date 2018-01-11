@@ -25,5 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(post_urls, namespace='post')),
     url(r'^api/', include(api_urls, namespace='api')),
+    url(r'^accounts/', include('allauth.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

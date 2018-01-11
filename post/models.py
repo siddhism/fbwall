@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ValidationError
 
-
 class ErrorConfig(object):
     already_likes = 'User already likes this post'
 
@@ -15,6 +14,14 @@ class Post(models.Model):
     image = models.ImageField(upload_to='media',null=True, blank=True)
     author = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_liked_by(self, user):
+        try:
+            like = Like.objects.get(user=user, post=post)
+            return Response({'status': True}, status=status.HTTP_200_OK)
+        except Like.DoesNotExist:
+            return Response({'status': False}, status=status.HTTP_200_OK)
+
 
     class Meta:
         verbose_name = "Post"
